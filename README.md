@@ -3,11 +3,20 @@
 [![ZeroPlatform Tier](https://img.shields.io/badge/ZeroPlatform-Tier%204%20(Graphics%20%26%20Spatial%203D)-ea580c.svg)](https://github.com/kzxl/ZeroPlatform)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![.NET Multi-Targeting](https://img.shields.io/badge/.NET-8.0%20%7C%204.6.2%20%7C%20Standard%202.0-purple.svg)](https://dotnet.microsoft.com/)
-[![NuGet Version](https://img.shields.io/badge/NuGet-1.1.0-blue.svg)](https://www.nuget.org/packages/Zero3D)
+[![NuGet Version](https://img.shields.io/badge/NuGet-1.2.0-blue.svg)](https://www.nuget.org/packages/Zero3D)
 
 **Zero3D** is an enterprise-grade, pure C# 3D graphics, software rasterization, point cloud processing, and model loading engine for .NET. Built with **zero external unmanaged dependencies**, it runs seamlessly across Windows, Linux, macOS, and headless containerized environments.
 
-Part of the **ZeroUniverse / ZeroPlatform** ecosystem.
+Operating as a 3D geometry, rasterization & model format foundation of **Tier 4 (Graphics & Spatial 3D)** within the **[ZeroPlatform](https://github.com/kzxl/ZeroPlatform)** ecosystem.
+
+---
+
+## 🏛️ Ecosystem Architectural Alignment
+
+- **Architectural Tier**: **Tier 4 (Graphics & Spatial 3D)**
+- **Permitted Upstream Dependencies**: Tier 0 (`ZeroPrimitives`, `ZeroConcurrency`), Tier 1 (`ZeroTensor`, `ZeroCompute`), Tier 3 (`ZeroGeometry`)
+- **Downstream Consumers**: Tier 4 (`ZeroTwin3D`), Tier 5 (`ZeroUI`, `ZeroPipeline`)
+- **Core Guarantees**: Pure C# software rasterizer, 0 unmanaged dependencies, cross-platform glTF/OBJ/STL/PLY model parsing.
 
 ---
 
