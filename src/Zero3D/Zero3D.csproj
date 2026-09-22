@@ -6,8 +6,8 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <NoWarn>$(NoWarn);1591</NoWarn>
-    <Description>Enterprise Pure C# 3D Graphics, Scene Graph, Mesh Primitives, glTF/OBJ/STL Loaders &amp; Simulation Engine for .NET.</Description>
-    <PackageTags>3d;graphics;scenegraph;gltf;obj;stl;cad;mesh;pbr;camera;simulation</PackageTags>
+    <Description>Enterprise Pure C# 3D Graphics, Scene Graph, Mesh Primitives, Software Rasterizer (Z-Buffer), Point Cloud Voxel Filtering, glTF/OBJ/STL/PLY Loaders for .NET.</Description>
+    <PackageTags>3d;graphics;scenegraph;rasterizer;zbuffer;pointcloud;ply;gltf;obj;stl;cad;mesh;simulation</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>
