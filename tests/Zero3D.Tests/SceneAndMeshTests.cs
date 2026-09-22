@@ -251,5 +251,81 @@ endsolid test";
             Assert.True(shaded.G > 0f);
             Assert.True(shaded.B > 0f);
         }
+
+        [Fact]
+        public void SoftwareRasterizer_RendersBox_WithDepthBuffer()
+        {
+            var scene = new Scene3D();
+            scene.Camera.Position = new Vec3(0, 0, 50);
+            scene.Camera.Target = Vec3.Zero;
+            scene.Camera.NearPlane = 1f;
+            scene.Camera.FarPlane = 1000f;
+
+            var node = new SceneNode
+            {
+                Name = "Box",
+                Mesh = MeshPrimitives.CreateCube(20f),
+                Material = new Material3D { Albedo = ColorRgb.Red }
+            };
+            scene.Root.AddChild(node);
+
+            var rasterizer = new SoftwareRasterizer(100, 100);
+            rasterizer.Render(scene);
+
+            byte[] pixels = rasterizer.GetPixelBytes();
+            Assert.Equal(100 * 100 * 4, pixels.Length);
+
+            // Center pixel (50, 50) should have drawn the cube face
+            int centerIdx = 50 * 100 + 50;
+            Assert.True(rasterizer.DepthBuffer[centerIdx] < float.MaxValue);
+            Assert.True(rasterizer.ColorBuffer[centerIdx] != 0);
+        }
+
+        [Fact]
+        public void PointCloud_And_VoxelGridFilter_Tests()
+        {
+            var pc = new PointCloud3D();
+            for (int i = 0; i < 100; i++)
+            {
+                // Clusters within small 0.5x0.5x0.5 cubes
+                float offset = (i % 2 == 0) ? 0.1f : 0.2f;
+                pc.Add(new Point3D(new Vec3(offset, offset, offset), ColorRgb.Green));
+            }
+            Assert.Equal(100, pc.Count);
+
+            // Downsample with voxel size 1.0 -> should merge into 1 point
+            var downsampled = VoxelGridFilter.Downsample(pc, 1.0f);
+            Assert.Equal(1, downsampled.Count);
+            Assert.Equal(0.15f, downsampled.Points[0].Position.X, 2);
+        }
+
+        [Fact]
+        public void PlyLoader_ParsesAsciiAndBinary_Tests()
+        {
+            string asciiPly = @"ply
+format ascii 1.0
+element vertex 3
+property float x
+property float y
+property float z
+element face 1
+property list uchar int vertex_indices
+end_header
+0 0 0
+10 0 0
+0 10 0
+3 0 1 2
+";
+            byte[] plyBytes = System.Text.Encoding.ASCII.GetBytes(asciiPly);
+            var mesh = PlyLoader.LoadMesh(plyBytes);
+
+            Assert.Equal(3, mesh.Vertices.Count);
+            Assert.Equal(3, mesh.Indices.Count);
+            Assert.Equal(1, mesh.TriangleCount);
+            Assert.Equal(10f, mesh.BoundingBox.Max.X, 2);
+
+            var pc = PlyLoader.LoadPointCloud(plyBytes);
+            Assert.Equal(3, pc.Count);
+        }
     }
 }

@@ -39,6 +39,10 @@ namespace Zero3D.IO
                 var mesh = StlLoader.LoadFromFile(filePath);
                 return new SceneNode { Name = Path.GetFileNameWithoutExtension(filePath), Mesh = mesh };
             }
+            if (ext == ".ply")
+            {
+                return PlyLoader.LoadFromFile(filePath);
+            }
             if (ext == ".glb")
             {
                 return LoadGlbFromFile(filePath);
